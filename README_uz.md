@@ -4,7 +4,7 @@
 
 # VOT UZ
 
-**YouTube videolari uchun real vaqtda sun'iy intellekt yordamida o'zbekcha ovozli tarjima [⚠️ Tekshiring: "ovozli tarjima" yoki "sinxron dublyaj"].**
+**YouTube videolari uchun real vaqtda sun'iy intellekt yordamida o'zbekcha ovozli tarjima.**
 
 [![Versiya](https://img.shields.io/badge/versiya-1.0.0-blue.svg)](https://github.com/abdurazzoqo/vot-uz/releases)
 [![Litsenziya](https://img.shields.io/badge/litsenziya-MIT-green.svg)](LICENSE)
@@ -16,7 +16,7 @@
 
 ## Dastur haqida
 
-**VOT UZ** — bu YouTube platformasidagi chet tilidagi videolarni tomosha qilish jarayonida to'g'ridan-to'g'ri o'zbek tiliga tabiiy ovoz bilan sinxron tarjima qiluvchi ochiq kodli Google Chrome kengaytmasi [⚠️ Tekshiring: "kengaytmasi" yoki "plagini"]. Tarjima Google Gemini API orqali amalga oshiriladi, o'zbekcha ovoz esa to'g'ridan-to'g'ri brauzeringiz ichida WebAssembly (Gapiring neyrotizimi) yordamida hosil qilinadi.
+**VOT UZ** — bu YouTube platformasidagi chet tilidagi videolarni tomosha qilish jarayonida to'g'ridan-to'g'ri o'zbek tiliga tabiiy ovoz bilan sinxron tarjima qiluvchi ochiq kodli Google Chrome kengaytmasi. Tarjima Google Gemini API orqali amalga oshiriladi, o'zbekcha ovoz esa to'g'ridan-to'g'ri brauzeringiz ichida WebAssembly (Gapiring neyrotizimi) yordamida hosil qilinadi.
 
 ---
 
@@ -26,7 +26,7 @@
 - **Brauzer ichidagi ovoz sintezi:** Ovoz to'liq kompyuteringizda (WebAssembly / ONNX Runtime Web) hosil bo'ladi, begona serverlarga audio yuborilmaydi.
 - **Tabiiy o'zbekcha ovozlar:** Erkak (`Anvar`) va Ayol (`Zilola`) neyron ovozlari orasidan tanlash imkoniyati.
 - **YouTube pleyeriga integratsiya:** Pleyer boshqaruv panelida qulay "Ovozli tarjima" tugmasi va status xabarnomasi.
-- **Asl ovozni avtomatik pasaytirish (Audio ducking) [⚠️ Tekshiring: "Asl ovozni pasaytirish" yoki "fon ovozini pasaytirish"]:** Tarjima gapirilayotgan vaqtda video foni avtomatik pasayadi (masalan, 15% gacha).
+- **Asl ovozni avtomatik pasaytirish (Audio ducking):** Tarjima gapirilayotgan vaqtda video foni avtomatik pasayadi (masalan, 15% gacha).
 - **Aqlli kutish va kutilmagan o'tkazishlar (Seeking):** Videoni oldinga yoki orqaga o'tkazganingizda, yangi vaqt uchun ovoz tayyor bo'lguncha video to'xtab turadi va tayyor bo'lgach avtomatik davom etadi.
 - **Moslashuvchan sozlamalar:** Tarjima va fon ovozi balandligi mikseri, audio sinxronlik siljishi (offset) va avtomatik boshlash rejimi.
 
@@ -77,7 +77,7 @@ Kengaytma belgisini bosganingizda quyidagi imkoniyatlar ochiladi:
 - **Ovoz balandligi (Mikser):** Tarjima ovozi va fon (asl video) ovozini foizlarda mustaqil sozlash.
 - **Qo'shimcha sozlamalar:**
   - *Avtomatik tarjima:* Har qanday video ochilganda tarjimani darhol o'zi boshlash.
-  - *Videoni kutish (Gate) [⚠️ Tekshiring: "Videoni kutish" yoki "Kutish shlyuzi"]:* Tarjima tayyor bo'lmaguncha videoni to'xtatib turish.
+  - *Videoni kutish (Gate):* Tarjima tayyor bo'lmaguncha videoni to'xtatib turish.
   - *Sekinlashtirish bilan sinxron:* Ovoz yetib kelishida kechikish bo'lsa, videoni biroz sekinlashtirish.
   - *Sinxron siljishi (Offset):* Ovoz tez yoki kech chiqayotgan bo'lsa, vaqtni ±3.0 soniyagacha qo'lda surish.
 
