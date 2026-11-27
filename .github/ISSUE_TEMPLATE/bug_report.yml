@@ -1,0 +1,62 @@
+name: Bug Report
+description: Create a report to help us fix a defect or unexpected behavior
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue! Please provide as much relevant information as possible.
+  - type: input
+    id: extension_version
+    attributes:
+      label: Extension Version
+      description: What version of VOT UZ are you running? (e.g., v1.0.0)
+      placeholder: v1.0.0
+    validations:
+      required: true
+  - type: input
+    id: browser_version
+    attributes:
+      label: Browser & OS Version
+      description: Which browser and OS are you using? (e.g., Google Chrome 130 on Windows 10)
+      placeholder: Google Chrome 130.0.6723.70 (Official Build) (64-bit), Windows 10
+    validations:
+      required: true
+  - type: input
+    id: video_url
+    attributes:
+      label: YouTube Video URL
+      description: The exact YouTube video link where the issue occurred
+      placeholder: https://www.youtube.com/watch?v=...
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the Bug
+      description: A clear and concise description of what happened.
+      placeholder: When seeking to 02:15, the translation stopped and the status remained on...
+    validations:
+      required: true
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: How can maintainers reproduce the issue?
+      value: |
+        1. Open the YouTube video '...'
+        2. Click 'Ovozli tarjima' button
+        3. Seek to minute ...
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: debug_log
+    attributes:
+      label: Debug Log / Console Output
+      description: Copy and paste the console logs from Chrome DevTools (F12 -> Console) or player debug overlay.
+      placeholder: "[VOT-UZ FSM] playing -> error ...\nGemini API error..."
+      render: shell
+    validations:
+      required: false

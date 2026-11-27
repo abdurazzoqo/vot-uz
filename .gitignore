@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build and development output
+.output/
+.wxt/
+dist/
+*.zip
+*.tar.gz
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local spikes and scratch exploration files
+spike/
+preview_ui.html

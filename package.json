@@ -1,0 +1,44 @@
+{
+  "name": "vot-uz",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Real-time AI voice-over dubbing extension for YouTube into Uzbek language",
+  "author": "abdurazzoqo <360958645+abdurazzoqo@users.noreply.github.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/abdurazzoqo/vot-uz#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abdurazzoqo/vot-uz.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abdurazzoqo/vot-uz/issues"
+  },
+  "keywords": [
+    "youtube",
+    "chrome-extension",
+    "uzbek",
+    "dubbing",
+    "text-to-speech",
+    "translation",
+    "gemini",
+    "voice-over"
+  ],
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "zip": "wxt zip",
+    "package": "wxt zip",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "gapiring": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.3.8",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.2",
+    "wxt": "^0.21.5"
+  }
+}

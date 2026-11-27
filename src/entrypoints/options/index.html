@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOT UZ - Sozlamalar</title>
+  <link rel="stylesheet" href="../popup/style.css">
+  <style>
+    body {
+      width: 100%;
+      min-height: 100vh;
+      max-height: none;
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px;
+      background-color: #0b0b0b;
+      overflow-y: auto;
+    }
+    .options-wrapper {
+      width: 100%;
+      max-width: 480px;
+    }
+    .options-wrapper .popup-container {
+      width: 100%;
+      max-height: none;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--yt-border);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8);
+      overflow: hidden;
+    }
+    .options-wrapper .popup-body {
+      max-height: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="options-wrapper">
+    <div id="app" class="popup-container">
+      
+      <!-- Header -->
+      <header class="app-header">
+        <div class="logo-area">
+          <div class="logo-badge">
+            <span>VU</span>
+          </div>
+          <div class="logo-title-group">
+            <div class="logo-title-row">
+              <h1 class="app-title">VOT UZ</h1>
+            </div>
+            <span class="app-subtitle">Sozlamalar paneli</span>
+          </div>
+        </div>
+
+        <div id="statusPill" class="status-pill ready">
+          <span class="status-dot"></span>
+          <span id="statusText">Tayyor</span>
+        </div>
+      </header>
+
+      <!-- Body -->
+      <div class="popup-body">
+        
+        <!-- Master Toggle Card -->
+        <div class="card master-card">
+          <div class="master-info">
+            <div class="master-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="master-title">Ovozli tarjimani faollashtirish</div>
+              <div class="master-desc">Videoga sinxron ovoz berish</div>
+            </div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="masterToggle" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- Voice Selection -->
+        <div class="section-group">
+          <div class="section-header">
+            <span class="section-label">
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clip-rule="evenodd"/>
+              </svg>
+              Ovoz tanlash
+            </span>
+            <span class="section-tag">Neural TTS</span>
+          </div>
+
+          <div class="voice-grid">
+            <div id="voiceCardM1" class="voice-card">
+              <div class="voice-top">
+                <div class="voice-avatar">♂</div>
+                <div id="voiceTickM1" class="voice-tick">✓</div>
+              </div>
+              <div class="voice-name">Erkak ovozi</div>
+              <div class="voice-desc">Anvar (Tabiiy, chuqur)</div>
+            </div>
+
+            <div id="voiceCardF1" class="voice-card active">
+              <div class="voice-top">
+                <div class="voice-avatar">♀</div>
+                <div id="voiceTickF1" class="voice-tick">✓</div>
+              </div>
+              <div class="voice-name">Ayol ovozi</div>
+              <div class="voice-desc">Zilola (Yumshoq, tiniq)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mixer -->
+        <div class="card mixer-group">
+          <div class="section-header" style="margin-bottom: 2px;">
+            <span class="section-label">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+              </svg>
+              Ovoz balandligi (Mikser)
+            </span>
+            <button id="resetMixerBtn" type="button" class="reset-link">Tiklash</button>
+          </div>
+
+          <div class="mixer-row">
+            <div class="mixer-labels">
+              <span class="mixer-title">Tarjima ovozi</span>
+              <span id="dubVolVal" class="mixer-value">100%</span>
+            </div>
+            <input type="range" id="dubVolSlider" min="0" max="100" value="100">
+          </div>
+
+          <div class="mixer-row">
+            <div class="mixer-labels">
+              <span class="mixer-title">Asl video ovozi (Fon)</span>
+              <span id="origVolVal" class="mixer-value muted">15%</span>
+            </div>
+            <input type="range" id="origVolSlider" min="0" max="100" value="15">
+          </div>
+        </div>
+
+        <!-- API Key -->
+        <div class="card api-key-group">
+          <div class="api-key-header">
+            <span class="section-label" style="margin-bottom: 0;">
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H4v2H2v-4l6.257-6.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"/>
+              </svg>
+              Gemini API kaliti
+            </span>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" class="api-key-link">
+              <span>Kalit olish ↗</span>
+            </a>
+          </div>
+
+          <div class="input-row">
+            <div class="input-wrapper">
+              <input type="password" id="apiKeyInput" class="text-input" placeholder="AIzaSy...">
+              <button id="toggleKeyVisBtn" type="button" class="eye-btn" title="Ko'rsatish/Yashirish">
+                <svg id="eyeIcon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+              </button>
+            </div>
+            <button id="checkKeyBtn" type="button" class="check-key-btn">Tekshirish</button>
+          </div>
+
+          <div id="keyStatusMsg" class="key-status-text"></div>
+        </div>
+
+        <!-- Collapsible: Advanced -->
+        <details id="advancedDetails" class="accordion" open>
+          <summary class="accordion-summary">
+            <span class="summary-title">
+              <svg width="14" height="14" fill="none" stroke="#3EA6FF" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+              </svg>
+              Kengaytirilgan sozlamalar
+            </span>
+            <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+
+          <div class="accordion-content">
+            <div class="setting-item">
+              <div class="setting-meta">
+                <span class="setting-name">Avtomatik tarjima qilish</span>
+                <span class="setting-sub">Videoni ochishi bilan boshlash</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="autoTranslateToggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-meta">
+                <span class="setting-name">Tayyor bo'lguncha pauza</span>
+                <span class="setting-sub">Sintez to'liq yuklanguncha kutish</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="holdVideoToggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-meta">
+                <span class="setting-name">Kechikishda sekinlashtirish</span>
+                <span class="setting-sub">Kadr va ovoz sinxronini saqlash</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="slowVideoToggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="mixer-row" style="padding-top: 4px; border-top: 1px solid #1e1e1e;">
+              <div class="mixer-labels">
+                <span class="mixer-title">Sinxron siljishi (Offset)</span>
+                <span id="syncOffsetVal" class="mixer-value">0.0 s</span>
+              </div>
+              <input type="range" id="syncOffsetSlider" min="-3" max="3" step="0.1" value="0">
+            </div>
+
+            <div class="setting-item" style="padding-top: 4px; border-top: 1px solid #1e1e1e;">
+              <div class="setting-meta">
+                <span class="setting-name">Nosozliklarni aniqlash (Debug)</span>
+                <span class="setting-sub">Pleyer ustida texnik ma'lumotlarni ko'rsatish</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="debugModeToggle">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </details>
+
+        <!-- About & Licenses -->
+        <details class="accordion">
+          <summary class="accordion-summary">
+            <span class="summary-title">
+              <svg width="14" height="14" fill="none" stroke="#AAAAAA" viewBox="0 0 24 24" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+              Dastur haqida va manbalar
+            </span>
+            <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+
+          <div class="accordion-content" style="font-size: 11px; color: var(--yt-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 8px;">
+            <p><strong style="color: #fff;">VOT UZ v1.0</strong> — YouTube videolarini o'zbek tiliga sun'iy intellekt ovozi bilan real vaqtda sinxron tarjima qiluvchi kengaytma.</p>
+
+            <div style="border-top: 1px solid var(--yt-border-dim); padding-top: 6px;">
+              <strong style="color: #fff; display: block; margin-bottom: 3px;">Foydalanilgan manbalar va litsenziyalar:</strong>
+              <ul style="padding-left: 14px; margin: 0; display: flex; flex-direction: column; gap: 4px;">
+                <li><strong>Ovoz sintezi (TTS):</strong> Gapiring modeli (Islomov / Gapi.uz, CC BY 4.0 / MIT).</li>
+                <li><strong>Tarjima modeli:</strong> Google Gemini API (Google AI Studio).</li>
+                <li><strong>Sintez mexanizmi:</strong> ONNX Runtime Web (WebAssembly / SIMD).</li>
+              </ul>
+            </div>
+
+            <div style="border-top: 1px solid var(--yt-border-dim); padding-top: 6px;">
+              <strong style="color: #fff; display: block; margin-bottom: 2px;">Maxfiylik va xavfsizlik:</strong>
+              <p>API kaliti va sozlamalar faqat sizning brauzeringiz xotirasida saqlanadi va uchinchi shaxslarga yuborilmaydi.</p>
+            </div>
+          </div>
+        </details>
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <button id="saveBtn" type="button" class="save-btn">Saqlash</button>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- Onboarding Modal Overlay -->
+  <div id="onboardingOverlay" class="onboarding-overlay hidden">
+    <div class="onboarding-card">
+      <button id="obCloseBtn" type="button" class="ob-close-btn" title="Yopish">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <div class="ob-logo">
+        <span>VOT</span>
+      </div>
+
+      <h2 class="ob-title">VOT UZ</h2>
+      <p class="ob-subtitle">YouTube videolarini o'zbek tiliga ovozli tarjima qilish</p>
+
+      <div class="ob-features">
+        <div class="ob-feature-row">
+          <div class="ob-check">✓</div>
+          <span>YouTube pleyeriga to'liq integratsiya qilingan tugmalar</span>
+        </div>
+        <div class="ob-feature-row">
+          <div class="ob-check">✓</div>
+          <span>Tabiiy o'zbekcha erkak va ayol ovozlari (AI Neural Dubbing)</span>
+        </div>
+        <div class="ob-feature-row">
+          <div class="ob-check">✓</div>
+          <span>Kechikishlarsiz aqlli sinxronlash va audio mikser</span>
+        </div>
+      </div>
+
+      <button id="obStartBtn" type="button" class="ob-btn">
+        <span>Boshlash</span>
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script type="module" src="../popup/main.ts"></script>
+</body>
+</html>

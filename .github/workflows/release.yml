@@ -1,0 +1,84 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build & Publish Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck & Tests
+        run: |
+          npm run typecheck
+          npm test
+
+      - name: Verify Version Consistency
+        id: version_check
+        run: |
+          TAG="${GITHUB_REF#refs/tags/v}"
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          echo "Pushed tag: v$TAG"
+          echo "package.json version: $PKG_VERSION"
+          if [ "$TAG" != "$PKG_VERSION" ]; then
+            echo "Error: Git tag version ($TAG) does not match package.json version ($PKG_VERSION)"
+            exit 1
+          fi
+          echo "version=$TAG" >> $GITHUB_OUTPUT
+          echo "tag=v$TAG" >> $GITHUB_OUTPUT
+
+      - name: Build Extension Zip
+        run: npm run zip
+
+      - name: Package and Generate Checksum
+        run: |
+          TAG="${{ steps.version_check.outputs.tag }}"
+          VERSION="${{ steps.version_check.outputs.version }}"
+          DIST_ZIP="vot-uz-chrome-${TAG}.zip"
+          cp .output/vot-uz-*-chrome.zip "$DIST_ZIP"
+          sha256sum "$DIST_ZIP" > "${DIST_ZIP}.sha256"
+          echo "Generated artifact: $DIST_ZIP"
+          cat "${DIST_ZIP}.sha256"
+
+      - name: Extract Changelog Section
+        id: changelog
+        run: |
+          VERSION="${{ steps.version_check.outputs.version }}"
+          # Extract the section for this version from CHANGELOG.md
+          sed -n "/## \[${VERSION}\]/,/## \[/p" CHANGELOG.md | sed '$d' > release_notes.md || true
+          if [ ! -s release_notes.md ]; then
+            echo "Release $TAG" > release_notes.md
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "VOT UZ ${{ steps.version_check.outputs.tag }}"
+          body_path: release_notes.md
+          draft: false
+          prerelease: false
+          files: |
+            vot-uz-chrome-${{ steps.version_check.outputs.tag }}.zip
+            vot-uz-chrome-${{ steps.version_check.outputs.tag }}.zip.sha256
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
