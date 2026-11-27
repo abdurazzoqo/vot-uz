@@ -20,6 +20,18 @@
 
 ---
 
+## Ko'rinishi (Preview)
+
+<div align="center">
+
+| YouTube Pleyeridagi tugma va holat | Sozlamalar menyusi |
+| :---: | :---: |
+| <img src="docs/assets/player_demo.png" alt="YouTube Pleyeridagi tugma va holat" width="480"> | <img src="docs/assets/popup.png" alt="Sozlamalar menyusi" width="240"> |
+
+</div>
+
+---
+
 ## Imkoniyatlari
 
 - **Tezkor AI Tarjima:** Google Gemini API (`gemini-2.5-flash` / `gemini-3.5-flash-lite`) yordamida kontekstni hisobga olgan aniq tarjima.

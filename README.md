@@ -22,16 +22,13 @@
 
 ## Visual Preview
 
-<!-- SCREENSHOT / GIF PLACEHOLDER -->
-> **Note for Maintainer:** Capture a 5-10 second GIF demonstrating:
-> 1. Opening a YouTube video with foreign speech.
-> 2. Clicking the **"O'zbekcha ovoz"** button on the YouTube player controls.
-> 3. The quick "Tarjima qilinmoqda..." status appearing and automatically switching to "Tayyor".
-> Place the recording as `docs/assets/demo.gif` and screenshots of the popup under `docs/assets/popup.png`.
+<div align="center">
 
 | YouTube Player Button & Status | Settings Popup |
 | :---: | :---: |
-| ![Player Demo Placeholder](docs/assets/player_demo_placeholder.png) | ![Popup Screenshot Placeholder](docs/assets/popup_placeholder.png) |
+| <img src="docs/assets/player_demo.png" alt="YouTube Player Button & Status" width="480"> | <img src="docs/assets/popup.png" alt="Settings Popup" width="240"> |
+
+</div>
 
 ---
 
